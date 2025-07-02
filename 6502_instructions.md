@@ -132,3 +132,134 @@ Absolutely! The **6502** microprocessor has a famously compact and regular instr
 Focus on learning the groups and their purposes. Once you understand what each group does, memorizing the individual instructions becomes much easier!
 
 If you’d like a printable cheat sheet or more details about addressing modes, let me know!
+
+
+# 6502 coding tips from AI
+
+ 
+
+### 1. Looping Exactly 256 Times Using INX and BNE
+
+```assembly
+    LDX #$00        ; Start X at 0
+Loop:
+    ; Do stuff here
+    INX         ; Increment X
+    BNE Loop    ; Loop until X wraps to 0 (after 256 times)
+```
+
+
+### 2. Unroll Loops for Maximum Speed
+
+```assembly
+    LDA #$00
+    STA $0200
+    STA $0201
+    STA $0202
+    STA $0203
+    ; ...repeat as needed
+```
+
+
+### 3. Range Checking with CPX/CPY and Branches
+
+```assembly
+    LDX #$00
+Loop:
+    ; Do stuff here
+    INX
+    CPX #$10      ; Compare X to 16
+    BNE Loop      ; Loop until X == 16
+```
+
+
+### 4. Conditional Branching with CMP and BEQ/BNE
+
+```assembly
+    CMP #10
+    BEQ Equal
+        ; Not equal code
+        JMP Done
+Equal:
+    ; Equal code
+Done:
+```
+
+
+### 5. Checking Bits Without Affecting A Using BIT
+
+```assembly
+    BIT $D000      ; Test bits at $D000
+    BMI SetBit     ; Branch if bit 7 is set (negative flag)
+    ; ...other code
+SetBit:
+    ; ...code if bit is set
+```
+
+
+### 6. Multiplying or Dividing by 2 Using Shifts and Rotates
+
+```assembly
+    ASL A          ; Multiply A by 2 (shift left)
+    LSR A          ; Divide A by 2 (shift right)
+    ROL A          ; Rotate left through carry
+    ROR A          ; Rotate right through carry
+```
+
+
+### 7. Implementing Switch-Case Logic with a Jump Table
+
+```assembly
+    LDX index
+    LDA TableLo,X
+    STA $FE
+    LDA TableHi,X
+    STA $FF
+    JMP ($FE)
+
+TableLo: .byte <Addr0, <Addr1, <Addr2
+TableHi: .byte >Addr0, >Addr1, >Addr2
+```
+
+
+### 8. Filling an Array Using STA addr,X in a Loop
+
+```assembly
+    LDX #$00
+    LDA #$FF
+Loop:
+    STA $0400,X   ; Store value in array
+    INX
+    CPX #$10      ; Repeat for 16 bytes
+    BNE Loop
+```
+
+
+### 9. Branching Over Code Instead of Using Else
+
+```assembly
+    CMP #5
+    BNE NotFive
+        ; Code for A == 5
+        JMP End
+NotFive:
+    ; Code for A != 5
+End:
+```
+
+
+### 10. Always Set or Clear Carry Before ADC/SBC
+
+```assembly
+    CLC           ; Clear carry before addition
+    ADC #$10      ; Add 16 to A
+
+    SEC           ; Set carry before subtraction
+    SBC #$05      ; Subtract 5 from A
+```
+
+Let me know if you need more examples or further formatting!
+
+
+
+
