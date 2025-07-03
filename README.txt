@@ -1,4 +1,3 @@
-<img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" class="logo" width="120"/>
 
 # there are less than 200 instructions in 6502. Can you classify them into groups so that easier for students to learn?
 
